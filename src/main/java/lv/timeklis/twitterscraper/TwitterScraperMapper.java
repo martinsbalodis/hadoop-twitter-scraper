@@ -43,9 +43,7 @@ public class TwitterScraperMapper extends MapReduceBase implements Mapper<LongWr
 
 	public String escape(String str) {
 
-		str = str.replace("\"", "\"\"");
-		str = str.replace("\n", " ");
-		str = "\"" + str + "\"";
+		str = str.replace("|", "/");
 		return str;
 	}
 
@@ -79,20 +77,20 @@ public class TwitterScraperMapper extends MapReduceBase implements Mapper<LongWr
 				}
 				
 				String record = tweet.getId()
-						+ "," + tweet.getCreatedAt().toString()
-						+ "," + result_location
-						+ "," + escape(tweet.getIsoLanguageCode() == null ? "":tweet.getIsoLanguageCode())
-						+ "," + tweet.getFavoriteCount()
-						+ "," + tweet.getInReplyToStatusId()
-						+ "," + tweet.getInReplyToUserId()
-						+ "," + tweet.getContributors().toString()
-						+ "," + escape(tweet.getPlace()== null?"":tweet.getPlace().toString())
-						+ "," + tweet.getRetweetCount()
-						+ "," + tweet.getRetweetedStatus()
-						+ "," + escape(tweet.getText())
-						+ "," + escape(tweet.getUser().getName())
-						+ "," + escape(tweet.getUser().getLocation() == null?"":tweet.getUser().getLocation())
-						+ "," + escape(tweet.getUser().getLang() == null?"":tweet.getUser().getLang());
+						+ "|" + tweet.getCreatedAt().toString()
+						+ "|" + result_location
+						+ "|" + escape(tweet.getIsoLanguageCode() == null ? "":tweet.getIsoLanguageCode())
+						+ "|" + tweet.getFavoriteCount()
+						+ "|" + tweet.getInReplyToStatusId()
+						+ "|" + tweet.getInReplyToUserId()
+						+ "|" + tweet.getContributors().toString()
+						+ "|" + escape(tweet.getPlace()== null?"":tweet.getPlace().toString())
+						+ "|" + tweet.getRetweetCount()
+						+ "|" + tweet.getRetweetedStatus()
+						+ "|" + escape(tweet.getText())
+						+ "|" + escape(tweet.getUser().getName())
+						+ "|" + escape(tweet.getUser().getLocation() == null?"":tweet.getUser().getLocation())
+						+ "|" + escape(tweet.getUser().getLang() == null?"":tweet.getUser().getLang());
 				textResult.set(record);
 				output.collect(textResult, nullResult);
 			}
